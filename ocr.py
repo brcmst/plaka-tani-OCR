@@ -24,13 +24,13 @@ foto = np.array(foto) #--- uint8: 8 bit array/unsigned int
 
 
 foto1 = load_img(dYolu, target_size=(224,224))
-fotoArr = img_to_array(foto1)/255.0    #----------normalize cıktı
-#print(fotoArr)
+fotoArr = img_to_array(foto1)/255.0    
+#print(fotoArr)        #----------normalize cıktı
 
 # orijinal foto boyutları
 h,w,d = foto.shape
-print('Foto yuksekligi =',h)  #---366
-print('Foto genisliği =',w)   #---468 
+print('Foto yuksekligi =',h)  
+print('Foto genisliği =',w)   
 
 plt.figure(figsize=(10,8))
 plt.imshow(foto)
@@ -43,14 +43,14 @@ testArr = fotoArr.reshape(1,224,224,3)   #----yeniden yapılandırılabilir..
 
 
 koordinat = model2.predict(testArr) #------okuyacagım alanın koord. 
-#print("normalize koordinatlar: ", koordinat)    #--------- [[0.22246161 0.45605034 0.67056817 0.79729235]]  /bu veri normalize, bunu denormalize yapıcaz
+#print("normalize koordinatlar: ", koordinat)    #---------bu veri normalize, bunu denormalize yapıcaz
 
 denormalize = np.array([w,w,h,h])
 koordinat = koordinat * denormalize
-#print("gercek koordinatlar: ", koordinat)  #-------------- denormalize koor: [[104.11203396 213.43155742 245.42794955 291.80900073]]
+#print("gercek koordinatlar: ", koordinat)  #-------------- denormalize koor.
 
 koordinat = koordinat.astype(np.int32)  #------float tipten int'e donusum
-print("koordinatlar tam sayı degerleri: ", koordinat)    #----tam sayı koor: [[104 213 245 291]]  -------  
+print("koordinatlar tam sayı degerleri: ", koordinat)    #----tam sayı koor.
 
 
 
@@ -58,8 +58,8 @@ print("koordinatlar tam sayı degerleri: ", koordinat)    #----tam sayı koor: [
 xmin, xmax,ymin,ymax = koordinat[0]
 ft1 =(xmin,ymin)
 ft2 =(xmax,ymax)
-print(ft1, ft2)   #----------(104, 245) (213, 291)
-cv2.rectangle(foto,ft1,ft2,(0,255,0),3)  #3 pixel -- koord bazı fotolarda tutmuyor.. 
+print(ft1, ft2)   
+cv2.rectangle(foto,ft1,ft2,(0,255,0),3)  #----3 pixel
 
 
 plt.figure(figsize=(10,8))
